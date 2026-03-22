@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Creadores Digitales | Modelo ADDIE + TPACK - Presentación Interactiva</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800;14..32,900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            font-family: 'Inter', sans-serif;
+            min-height: 100vh;
+            padding: 1.5rem;
+        }
+
+        /* Contenedor principal con efecto glassmorphism */
+        .app-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 2rem;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            overflow: hidden;
+            backdrop-filter: blur(2px);
+            transition: all 0.3s ease;
+        }
+
+        /* Header dinámico */
+        .main-header {
+            background: linear-gradient(120deg, #0b2b3b 0%, #1a5f6e 100%);
+            padding: 2rem 2.5rem;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .main-header::before {
+            content: "";
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 300px;
+            height: 300px;
+            background: rgba(247, 176, 94, 0.15);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .main-header h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .main-header h1 i {
+            background: #f7b05e;
+            color: #0b2b3b;
+            padding: 12px;
+            border-radius: 20px;
+            font-size: 1.8rem;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+        }
+
+        .badge-header {
+            background: rgba(247, 176, 94, 0.25);
+            backdrop-filter: blur(4px);
+            padding: 0.5rem 1.2rem;
+            border-radius: 40px;
+            font-size: 0.85rem;
+            display: inline-block;
+            margin-top: 1rem;
+            font-weight: 500;
+        }
+
+        /* Navegación con pestañas / botones */
+        .nav-tabs {
+            display: flex;
+            flex-wrap: wrap;
+            background: #f8fafc;
+            border-bottom: 2px solid #e2e8f0;
+            padding: 0 1rem;
+            gap: 0.5rem;
+        }
+
+        .tab-btn {
+            background: transparent;
+            border: none;
+            padding: 1rem 1.8rem;
+            font-size: 1rem;
+            font-weight: 600;
+            color: #475569;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            border-radius: 12px 12px 0 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .tab-btn i {
+            font-size: 1.2rem;
+        }
+
+        .tab-btn:hover {
+            background: #eef2ff;
+            color: #0f3b44;
+        }
+
+        .tab-btn.active {
+            background: white;
+            color: #f7b05e;
+            border-bottom: 3px solid #f7b05e;
+            color: #1a5f6e;
+        }
+
+        /* Contenido de páginas (multi-página) */
+        .pages-container {
+            background: white;
+            min-height: 550px;
+            position: relative;
+        }
+
+        .page {
+            display: none;
+            animation: fadeIn 0.4s ease-out;
+            padding: 2rem 2.2rem;
+        }
+
+        .page.active-page {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px);}
+            to { opacity: 1; transform: translateY(0);}
+        }
+
+        /* Estilos de tarjetas y componentes */
+        .grid-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .card-modern {
+            background: #ffffff;
+            border-radius: 1.5rem;
+            padding: 1.5rem;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+            border: 1px solid #eef2ff;
+            transition: all 0.3s;
+        }
+
+        .card-modern:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 20px 30px -12px rgba(0,0,0,0.15);
+            border-color: #f7b05e70;
+        }
+
+        .card-icon-large {
+            font-size: 2.5rem;
+            background: #fef7e6;
+            width: 65px;
+            height: 65px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 1.2rem;
+            margin-bottom: 1rem;
+            color: #f7b05e;
+        }
+
+        .tpack-integration {
+            background: linear-gradient(105deg, #fef9ef 0%, #fff6ea 100%);
+            border-left: 6px solid #f7b05e;
+            padding: 1.6rem;
+            border-radius: 1.5rem;
+            margin: 1rem 0;
+        }
+
+        .btn-action {
+            background: #1a5f6e;
+            color: white;
+            border: none;
+            padding: 0.7rem 1.5rem;
+            border-radius: 2rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.9rem;
+        }
+
+        .btn-action:hover {
+            background: #0f4452;
+            transform: scale(1.02);
+        }
+
+        .btn-secondary {
+            background: #f7b05e;
+            color: #1e293b;
+        }
+
+        .quote-block {
+            background: #0b2b3b;
+            color: white;
+            border-radius: 1.5rem;
+            padding: 1.5rem;
+            margin: 1.2rem 0;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-nav {
+            display: flex;
+            justify-content: space-between;
+            padding: 1.2rem 2rem;
+            background: #f1f5f9;
+            border-top: 1px solid #e2e8f0;
+        }
+
+        .btn-nav {
+            background: #e2e8f0;
+            border: none;
+            padding: 0.6rem 1.2rem;
+            border-radius: 2rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-nav:hover {
+            background: #cbd5e1;
+        }
+
+        .progress-indicator {
+            text-align: center;
+            font-size: 0.85rem;
+            color: #5b7c8c;
+        }
+
+        @media (max-width: 768px) {
+            .page {
+                padding: 1.2rem;
+            }
+            .tab-btn {
+                padding: 0.7rem 1rem;
+                font-size: 0.8rem;
+            }
+        }
+
+        /* Estilos para lista de recursos */
+        .resource-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 1rem;
+        }
+        .resource-tag {
+            background: #eef2ff;
+            padding: 0.4rem 1rem;
+            border-radius: 30px;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+    </style>
+</head>
+<body>
+<div class="app-container">
+    <div class="main-header">
+        <div class="header-content">
+            <h1>
+                <i class="fas fa-chalkboard-user"></i> 
+                Creadores Digitales
+            </h1>
+            <p style="margin-top: 0.8rem; font-size: 1.1rem; opacity: 0.95; max-width: 80%;">
+                <i class="fas fa-quote-left"></i> Modelo de diseño instruccional ADDIE + TPACK para enseñar programación web a niños de 5° grado
+            </p>
+            <div class="badge-header">
+                <i class="fas fa-rocket"></i> 9-11 años | HTML + CSS | Aprendizaje Basado en Proyectos
+            </div>
+        </div>
+    </div>
+
+    <!-- Sistema de pestañas: múltiples páginas -->
+    <div class="nav-tabs">
+        <button class="tab-btn active" data-page="page1"><i class="fas fa-compass"></i> Visión General</button>
+        <button class="tab-btn" data-page="page2"><i class="fas fa-layer-group"></i> ADDIE + TPACK</button>
+        <button class="tab-btn" data-page="page3"><i class="fas fa-chalkboard"></i> Implementación & Evaluación</button>
+        <button class="tab-btn" data-page="page4"><i class="fas fa-tools"></i> Recursos & Herramientas</button>
+        <button class="tab-btn" data-page="page5"><i class="fas fa-star"></i> Galería & Comunidad</button>
+    </div>
+
+    <div class="pages-container">
+        <!-- PÁGINA 1: Visión General -->
+        <div id="page1" class="page active-page">
+            <h2 style="font-size: 1.8rem; font-weight: 700; margin-bottom: 0.5rem;"><i class="fas fa-bullseye" style="color:#f7b05e;"></i> ¿Por qué este modelo?</h2>
+            <p style="margin-bottom: 1rem; color: #334155;">Para niños de 9 a 11 años, el objetivo es transformarlos de <strong>consumidores digitales</strong> a <strong>creadores activos</strong> de la web. ADDIE aporta estructura ordenada y TPACK garantiza la integración auténtica entre tecnología, contenido y pedagogía.</p>
+            
+            <div class="grid-cards">
+                <div class="card-modern">
+                    <div class="card-icon-large"><i class="fas fa-users"></i></div>
+                    <h3>Estudiantes</h3>
+                    <p>Niños y niñas de grado 5°, curiosos, con acceso a 20 computadores, internet y uso de Google Classroom.</p>
+                </div>
+                <div class="card-modern">
+                    <div class="card-icon-large"><i class="fas fa-code"></i></div>
+                    <h3>Contenido central</h3>
+                    <p>HTML (estructura, etiquetas semánticas) y CSS básico (colores, tipografías, diseño simple).</p>
+                </div>
+                <div class="card-modern">
+                    <div class="card-icon-large"><i class="fas fa-project-diagram"></i></div>
+                    <h3>Metodología estrella</h3>
+                    <p>Aprendizaje Basado en Proyectos (ABP): cada estudiante crea su propia página web personal.</p>
+                </div>
+            </div>
+            <div class="tpack-integration">
+                <i class="fas fa-crown" style="font-size: 1.8rem; float: left; margin-right: 15px; color: #f7b05e;"></i>
+                <strong>Frase clave:</strong> "Planificar antes de crear. La tecnología es una herramienta, no el objetivo. ¡Mis estudiantes serán creadores digitales!"
+            </div>
+            <button class="btn-action" id="exploreAddieBtn"><i class="fas fa-arrow-right"></i> Explorar modelo ADDIE + TPACK</button>
+        </div>
+
+        <!-- PÁGINA 2: ADDIE + TPACK (detalle completo) -->
+        <div id="page2" class="page">
+            <h2 style="font-size: 1.8rem; margin-bottom: 1rem;"><i class="fas fa-chart-line"></i> ADDIE: Las 5 fases esenciales</h2>
+            <div class="grid-cards">
+                <div class="card-modern"><strong><i class="fas fa-search"></i> 1. Analizar</strong><br>Estudiantes (9-11 años, curiosos), recursos: 20 PC, internet, GC. Necesidad: aprender a crear páginas web con HTML/CSS.</div>
+                <div class="card-modern"><strong><i class="fas fa-pencil-ruler"></i> 2. Diseñar</strong><br>ABP como enfoque, RED con eXeLearning, editores en línea, galería de trabajos. Actividades mixtas (clase + casa).</div>
+                <div class="card-modern"><strong><i class="fas fa-code-branch"></i> 3. Desarrollar</strong><br>Contenido CK (HTML/CSS), Pedagogía PK (colaborativa, lúdica), Tecnología TK (eXeLearning, CodePen, Padlet).</div>
+                <div class="card-modern"><strong><i class="fas fa-chalkboard"></i> 4. Implementar</strong><br>2h semanales (teoría+práctica guiada), videos tutoriales, práctica autónoma, galería Padlet para compartir.</div>
+                <div class="card-modern"><strong><i class="fas fa-chart-simple"></i> 5. Evaluar</strong><br>Actividades interactivas, publicación de página web, coevaluación en Padlet y retroalimentación de estudiantes.</div>
+            </div>
+            <div class="tpack-integration" style="background:#eef2ff;">
+                <h3><i class="fas fa-puzzle-piece"></i> TPACK: La sinergia perfecta</h3>
+                <div style="display: flex; flex-wrap: wrap; gap: 1rem; margin-top: 1rem;">
+                    <div style="flex:1; min-width:120px"><strong>CK</strong><br>HTML+CSS</div>
+                    <div style="flex:1; min-width:120px"><strong>PK</strong><br>ABP + lúdico</div>
+                    <div style="flex:1; min-width:120px"><strong>TK</strong><br>eXeLearning, CodePen, Padlet</div>
+                </div>
+                <p style="margin-top: 1rem;"><i class="fas fa-sync-alt"></i> <strong>Integración TPACK:</strong> El RED en eXeLearning guía paso a paso para que los estudiantes usen CodePen y construyan su sitio web. La tecnología potencia el contenido mediante una pedagogía centrada en proyectos colaborativos.</p>
+            </div>
+        </div>
+
+        <!-- PÁGINA 3: Implementación y Evaluación -->
+        <div id="page3" class="page">
+            <div class="grid-cards">
+                <div class="card-modern">
+                    <h3><i class="fas fa-chalkboard-user"></i> Implementación en el aula</h3>
+                    <ul style="margin-top: 12px; list-style: none; padding-left: 0;">
+                        <li><i class="fas fa-clock"></i> <strong>2 horas semanales:</strong> Teoría interactiva + práctica guiada en CodePen</li>
+                        <li><i class="fas fa-laptop"></i> <strong>Práctica en casa:</strong> Videos tutoriales en Google Classroom, ejercicios cortos</li>
+                        <li><i class="fas fa-users"></i> <strong>Trabajo colaborativo:</strong> Parejas para revisar código, retroalimentación en Padlet</li>
+                        <li><i class="fas fa-images"></i> <strong>Galería semanal:</strong> Cada estudiante sube su avance y recibe comentarios</li>
+                    </ul>
+                </div>
+                <div class="card-modern">
+                    <h3><i class="fas fa-clipboard-check"></i> Evaluación integral</h3>
+                    <ul style="margin-top: 12px; list-style: none; padding-left: 0;">
+                        <li><i class="fas fa-gamepad"></i> <strong>Autoevaluación:</strong> actividades interactivas dentro del RED (eXeLearning)</li>
+                        <li><i class="fas fa-globe"></i> <strong>Proyecto final:</strong> Página web publicada (tema libre) con HTML y CSS</li>
+                        <li><i class="fas fa-star"></i> <strong>Rúbrica colaborativa:</strong> coevaluación entre compañeros usando Padlet</li>
+                        <li><i class="fas fa-chart-line"></i> <strong>Mejora continua:</strong> encuesta de satisfacción y sugerencias para futuras versiones</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="quote-block">
+                <span><i class="fas fa-lightbulb"></i> "Aprender haciendo: cada error es una oportunidad para depurar y mejorar."</span>
+                <span><i class="fas fa-trophy"></i> "Los estudiantes se convierten en protagonistas de su aprendizaje."</span>
+            </div>
+            <button class="btn-action btn-secondary" id="viewResourcesBtn"><i class="fas fa-cogs"></i> Ver recursos y herramientas</button>
+        </div>
+
+        <!-- PÁGINA 4: Recursos y herramientas tecnológicas -->
+        <div id="page4" class="page">
+            <h2><i class="fas fa-microchip"></i> Ecosistema tecnológico del modelo</h2>
+            <div class="grid-cards">
+                <div class="card-modern">
+                    <i class="fas fa-chalkboard" style="font-size: 2rem; color:#f7b05e;"></i>
+                    <h3>eXeLearning (RED)</h3>
+                    <p>Recurso Educativo Digital que guía a los niños paso a paso, integrando teoría, práctica y evaluación interactiva.</p>
+                </div>
+                <div class="card-modern">
+                    <i class="fab fa-codepen" style="font-size: 2rem; color:#f7b05e;"></i>
+                    <h3>CodePen</h3>
+                    <p>Editor en línea colaborativo: visualización inmediata de HTML/CSS, ideal para experimentar sin instalaciones.</p>
+                </div>
+                <div class="card-modern">
+                    <i class="fab fa-padlet" style="font-size: 2rem; color:#f7b05e;"></i>
+                    <h3>Padlet</h3>
+                    <p>Muro digital para compartir los proyectos, comentarios positivos y construir comunidad de creadores.</p>
+                </div>
+                <div class="card-modern">
+                    <i class="fab fa-google" style="font-size: 2rem; color:#f7b05e;"></i>
+                    <h3>Google Classroom</h3>
+                    <p>Gestión de tareas, entrega de proyectos, anuncios y comunicación con familias.</p>
+                </div>
+            </div>
+            <div class="resource-list">
+                <span class="resource-tag"><i class="fas fa-palette"></i> HTML5</span>
+                <span class="resource-tag"><i class="fab fa-css3-alt"></i> CSS3</span>
+                <span class="resource-tag"><i class="fas fa-video"></i> Tutoriales interactivos</span>
+                <span class="resource-tag"><i class="fas fa-check-circle"></i> Rúbricas digitales</span>
+            </div>
+            <div class="tpack-integration" style="margin-top: 1.2rem;">
+                <i class="fas fa-quote-right"></i> <strong>TPACK en acción:</strong> La tecnología (CodePen + eXeLearning) no es un fin, sino un medio para construir conocimiento de programación web mediante pedagogía activa y colaborativa.
+            </div>
+        </div>
+
+        <!-- PÁGINA 5: Galería & Comunidad (simulador de interacción) -->
+        <div id="page5" class="page">
+            <h2><i class="fas fa-users-viewfinder"></i> Comunidad de Creadores Digitales</h2>
+            <p>Compartir los trabajos es esencial. Los estudiantes suben sus páginas a Padlet y comentan proyectos de sus compañeros.</p>
+            <div style="background: #f1f5f9; border-radius: 1.5rem; padding: 1.2rem; margin: 1rem 0;">
+                <i class="fas fa-thumbtack"></i> <strong>Ejemplo de interacción en la galería:</strong>
+                <div style="background: white; border-radius: 1rem; margin-top: 0.8rem; padding: 0.8rem;">
+                    <i class="fas fa-user-circle"></i> <strong>María, 10 años:</strong> "¡Mi primera página web trata sobre dinosaurios! Usé CSS para fondo verde."<br>
+                    <span style="color:#f7b05e;"><i class="fas fa-comment-dots"></i> Comentario de Juan:</span> "Me encanta el botón que hiciste. ¿Cómo le pusiste sombra?" 💬
+                </div>
+                <div style="background: white; border-radius: 1rem; margin-top: 0.8rem; padding: 0.8rem;">
+                    <i class="fas fa-user-circle"></i> <strong>Mateo, 11 años:</strong> "Mi proyecto: galería de arte con CSS Grid"<br>
+                    <span style="color:#f7b05e;"><i class="fas fa-heart"></i> 12 reacciones · comentarios positivos</span>
+                </div>
+            </div>
+            <button class="btn-action" id="simulateFeedbackBtn"><i class="fas fa-comment-medical"></i> Simular comentario colaborativo</button>
+            <div id="feedbackMessage" style="margin-top: 1rem; font-size: 0.9rem; color: #2c5f6e;"></div>
+            <div class="quote-block" style="margin-top: 1rem;">
+                <span><i class="fas fa-chalkboard"></i> "La retroalimentación entre pares fortalece habilidades socioemocionales y técnicas."</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navegación inferior con botones -->
+    <div class="footer-nav">
+        <button class="btn-nav" id="prevPageBtn"><i class="fas fa-chevron-left"></i> Anterior</button>
+        <div class="progress-indicator" id="pageIndicator">Página 1 / 5</div>
+        <button class="btn-nav" id="nextPageBtn">Siguiente <i class="fas fa-chevron-right"></i></button>
+    </div>
+</div>
+
+<script>
+    // Mapeo de páginas y control de pestañas + navegación integrada
+    const pages = ['page1', 'page2', 'page3', 'page4', 'page5'];
+    let currentPageIndex = 0;
+
+    const tabBtns = document.querySelectorAll('.tab-btn');
+    const pagesDivs = {
+        page1: document.getElementById('page1'),
+        page2: document.getElementById('page2'),
+        page3: document.getElementById('page3'),
+        page4: document.getElementById('page4'),
+        page5: document.getElementById('page5')
+    };
+
+    function showPage(pageId, updateUrl = true) {
+        // Ocultar todas las páginas
+        Object.values(pagesDivs).forEach(page => {
+            if (page) page.classList.remove('active-page');
+        });
+        // Mostrar la página seleccionada
+        if (pagesDivs[pageId]) {
+            pagesDivs[pageId].classList.add('active-page');
+        }
+        // Actualizar botones de pestaña activos
+        tabBtns.forEach(btn => {
+            btn.classList.remove('active');
+            if (btn.getAttribute('data-page') === pageId) {
+                btn.classList.add('active');
+            }
+        });
+        // Actualizar índice actual
+        currentPageIndex = pages.indexOf(pageId);
+        if (currentPageIndex === -1) currentPageIndex = 0;
+        updatePageIndicator();
+    }
+
+    function updatePageIndicator() {
+        const indicator = document.getElementById('pageIndicator');
+        if (indicator) {
+            indicator.innerText = `Página ${currentPageIndex+1} / ${pages.length}`;
+        }
+    }
+
+    function nextPage() {
+        if (currentPageIndex + 1 < pages.length) {
+            const nextPageId = pages[currentPageIndex + 1];
+            showPage(nextPageId);
+        } else {
+            // efecto sutil: ciclo o mensaje
+            const indicator = document.getElementById('pageIndicator');
+            indicator.style.opacity = '0.7';
+            setTimeout(() => indicator.style.opacity = '1', 300);
+        }
+    }
+
+    function prevPage() {
+        if (currentPageIndex - 1 >= 0) {
+            const prevPageId = pages[currentPageIndex - 1];
+            showPage(prevPageId);
+        }
+    }
+
+    // Eventos para pestañas
+    tabBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            const pageId = btn.getAttribute('data-page');
+            if (pageId && pagesDivs[pageId]) {
+                showPage(pageId);
+            }
+        });
+    });
+
+    // Botones next/prev
+    const nextBtn = document.getElementById('nextPageBtn');
+    const prevBtn = document.getElementById('prevPageBtn');
+    if (nextBtn) nextBtn.addEventListener('click', nextPage);
+    if (prevBtn) prevBtn.addEventListener('click', prevPage);
+
+    // Botones especiales internos que cambian de página
+    const exploreBtn = document.getElementById('exploreAddieBtn');
+    if (exploreBtn) {
+        exploreBtn.addEventListener('click', () => showPage('page2'));
+    }
+    const viewResourcesBtn = document.getElementById('viewResourcesBtn');
+    if (viewResourcesBtn) {
+        viewResourcesBtn.addEventListener('click', () => showPage('page4'));
+    }
+
+    // Simulación de comentario colaborativo en página 5
+    const simulateBtn = document.getElementById('simulateFeedbackBtn');
+    const feedbackDiv = document.getElementById('feedbackMessage');
+    if (simulateBtn && feedbackDiv) {
+        simulateBtn.addEventListener('click', () => {
+            const messages = [
+                "✨ ¡Excelente trabajo! Tu página tiene colores muy creativos. Sigue así.",
+                "💡 Me encanta cómo organizaste las etiquetas HTML. ¿Podrías compartir tu código?",
+                "🎉 Comentario agregado: 'Aprendí mucho viendo tu proyecto en Padlet. Inspirador!'",
+                "⭐ La comunidad valora tu esfuerzo. ¡Sigue creando!"
+            ];
+            const randomMsg = messages[Math.floor(Math.random() * messages.length)];
+            feedbackDiv.innerHTML = `<i class="fas fa-comment"></i> ${randomMsg} <span style="display:block; font-size:0.8rem; margin-top:5px;">#SomosCreadoresDigitales</span>`;
+            feedbackDiv.style.background = "#eef2ff";
+            feedbackDiv.style.padding = "12px";
+            feedbackDiv.style.borderRadius = "20px";
+        });
+    }
+
+    // Inicializar indicador
+    updatePageIndicator();
+</script>
+</body>
+</html>
